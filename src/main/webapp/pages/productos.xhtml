@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>ResBar</title>
+    </h:head>
+    <h:body>
+        <f:view>
+            <h:form id="form">
+
+                <p:menubar>
+                    <p:menuitem value="Ordenes" icon="ui-icon-home" url="../index.jsf"/>
+                    
+                </p:menubar>
+                <p:dataTable id="productos"
+                             var="productos" 
+                             value="#{frmproductos.lista}" 
+                             widgetVar="tblProductos"
+                             paginator="true"
+                             rows="10"
+                             emptyMessage="No se encontraron productos"
+                             selectionMode="single"
+                             selection="#{frmproductos.producto}"
+                             rowKey="#{productos.codigo}">
+                    
+                    <p:ajax event="rowSelect" listener="#{frmproductos.onRowSelect}" update="@all"/>
+                    
+                    <f:facet name="header">
+                        <h:outputText value="Productos Disponibles"/>                                  
+                    </f:facet>
+                    <p:column headerText="Producto">
+                        <h:outputText value="#{productos.nombre}" />
+                    </p:column>
+                    <p:column headerText="Precio">
+                        <h:outputText value="#{productos.precio}" />
+                    </p:column>
+                    <p:column headerText="Cantidad">
+                        <p:spinner id="cantidad" value="#{productos.cantidad}" />
+                    </p:column>
+                    
+                </p:dataTable>
+                
+                <p:commandButton value="Agregar Productos" actionListener="#{frmproductos.undirect()}" icon="ui-icon-arrowreturnthick-1-w"/>
+                
+            </h:form>
+        </f:view>
+    </h:body>
+</html>
+

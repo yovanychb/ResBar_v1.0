@@ -9,10 +9,83 @@
     <h:head>
         <title>ResBar</title>
         <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+        <link href="../resources/css/font-awesome.min.css" rel="stylesheet" type="text/css" media="all"/>
+        <link href="../resources/css/bootstrap.min.css" rel="stylesheet" type="text/css" media="all" />
     </h:head>
     <h:body>
-        Aqui va a ir el Dashboard :v
-       
+
+        <f:view>
+            <h:form id="form">
+
+                <p:menubar>
+                    <p:menuitem value="Home" icon="ui-icon-home" url="inicio.html"/>
+                    
+                </p:menubar>
+
+
+                <p:dataTable id="ordenes"
+                             var="orden" 
+                             value="#{frmOrden.ordenes}" 
+                             widgetVar="tblOrdenes"
+                             paginator="true"
+                             rows="10"
+                             emptyMessage="No se encontraron ordenes activas"
+                             selectionMode="single"
+                             selection="#{frmOrden.orden}"
+                             rowKey="#{orden.numero}">
+
+                    <p:ajax event="rowSelect" update=":form:OpDetails" oncomplete="PF('Options').show()" />
+
+                    <f:facet name="header">
+                        <h:outputText value="Ordenes Activas"/>                                  
+                    </f:facet>
+                    <p:column headerText="Numero">
+                        <h:outputText value="#{orden.numero}" />
+                    </p:column>
+                    <p:column headerText="Mesa">
+                        <h:outputText value="#{orden.mesa}" />
+                    </p:column>
+                    <p:column headerText="Mesero">
+                        <h:outputText value="#{orden.mesero}" />
+                    </p:column>
+                    <p:column headerText="Cliente">
+                        <h:outputText value="#{orden.cliente}" />
+                    </p:column>
+                    <p:column headerText="Descripcion">
+                        <h:outputText value="#{orden.descripcion}" />
+                    </p:column>
+                    <p:column headerText="Total">
+                        <h:outputText value="#{orden.total}" >
+                            <f:convertNumber type="currency" currencySymbol="$" />
+                        </h:outputText>
+                    </p:column>
+                </p:dataTable>
+
+                <p:dialog header="Opciones" 
+                          widgetVar="Options" 
+                          modal="true" 
+                          showEffect="fade" 
+                          hideEffect="fade" 
+                          resizable="false"
+                          width="50%">
+
+                    <p:outputPanel id="OpDetails" style="text-align:center;">
+                        <p:panelGrid  columns="4">
+                            <p:commandButton value="Agregar Productos" id="agregar" icon="ui-icon-plus" />
+                            <p:commandButton value="Imprimir Cuenta" id="imprimir" icon="ui-icon-print" />
+                            <p:commandButton value="Modificar Cuenta" id="modificar" icon="ui-icon-pencil" />
+                            <p:commandButton value="Cobrar" id="cobrar" icon="ui-icon-check" />
+                        </p:panelGrid>
+                    </p:outputPanel>
+                </p:dialog>
+                <p:commandButton actionListener="#{frmOrden.nueva()}" value="Agregar Orden" icon="ui-icon-plusthick">
+                </p:commandButton>
+
+            </h:form>
+        </f:view>
+
+
     </h:body>
+
 </html>
 

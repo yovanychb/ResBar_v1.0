@@ -9,40 +9,66 @@
         <h:head>
             <f:facet name="first">
                 <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
-                <title>PrimeFaces</title>
+                <title>ResBar</title>
             </f:facet>
+            <link href="netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet"></link>
         </h:head>
 
         <h:body>
 
-            <p:layout fullPage="true">
+            <f:view>
+                <h:form id="form">
 
-                <p:layoutUnit position="north" size="100" resizable="true" closable="true" collapsible="true">
-                    Header
-                </p:layoutUnit>
+                    <p:dataTable id="ordenes"
+                                 var="orden" 
+                                 value="#{frmOrden.ordenes}" 
+                                 widgetVar="tblOrdenes"
+                                 paginator="true"
+                                 rows="10"
+                                 emptyMessage="No se encontraron ordenes activas"
+                                 selectionMode="single"
+                                 selection="#{frmOrden.orden}"
+                                 rowKey="#{orden.numero}">
 
-                <p:layoutUnit position="south" size="100" closable="true" collapsible="true">
-                    Footer
-                </p:layoutUnit>
+                        <p:ajax event="rowSelect" update=":form:OpDetails" oncomplete="PF('Options').show()" />
 
-                <p:layoutUnit position="west" size="175" header="Left" collapsible="true">
-                    <p:menu>
-                        <p:submenu label="Resources">
-                            <p:menuitem value="Demo" url="http://www.primefaces.org/showcase-labs/ui/home.jsf" />
-                            <p:menuitem value="Documentation" url="http://www.primefaces.org/documentation.html" />
-                            <p:menuitem value="Forum" url="http://forum.primefaces.org/" />
-                            <p:menuitem value="Themes" url="http://www.primefaces.org/themes.html" />
+                        <f:facet name="header">
+                            <h:outputText value="Ordenes Activas"/>                                  
+                        </f:facet>
+                        <p:column headerText="Numero">
+                            <h:outputText value="#{orden.numero}" />
+                        </p:column>
+                        <p:column headerText="Mesa">
+                            <h:outputText value="#{orden.mesa}" />
+                        </p:column>
+                        <p:column headerText="Mesero">
+                            <h:outputText value="#{orden.mesero}" />
+                        </p:column>
+                        <p:column headerText="Cliente">
+                            <h:outputText value="#{orden.cliente}" />
+                        </p:column>
+                        <p:column headerText="Descripcion">
+                            <h:outputText value="#{orden.descripcion}" />
+                        </p:column>
+                        <p:column headerText="Total">
+                            <h:outputText value="#{orden.total}" />
+                        </p:column>
+                    </p:dataTable>
 
-                        </p:submenu>
+                    <p:dialog header="Opciones" widgetVar="Options" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                        <p:outputPanel id="OpDetails" style="text-align:center;">
+                            <p:panelGrid  columns="4">
+                                <p:commandButton value="Agregar Productos" id="agregar" icon="ui-icon-plus" />
+                                <p:commandButton value="Imprimir Cuenta" id="imprimir" icon="fa fa-home" />
+                                <p:commandButton value="Modificar Cuenta" id="modificar" icon="ui-icon-disk" />
+                                <p:commandButton value="Cobrar" id="cobrar" icon="ui-icon-disk" />
+                            </p:panelGrid>
+                        </p:outputPanel>
+                    </p:dialog>
 
-                    </p:menu>
-                </p:layoutUnit>
+                </h:form>
+            </f:view>
 
-                <p:layoutUnit position="center">
-                    Welcome to PrimeFaces
-                </p:layoutUnit>
-
-            </p:layout>
 
         </h:body>
 
