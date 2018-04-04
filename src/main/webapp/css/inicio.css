@@ -1,0 +1,36 @@
+.slider{
+  top: 0;
+  background: url("../img/fraga.jpg");
+  height: 89vh;
+  width: 80%;
+  background-size: cover;
+  background-position: center;
+  float: right;
+}
+
+.menu{
+  background-color: #F7D358;
+  float:left;
+  width: 20%;
+  height: 89vh;
+}
+
+.textoMenu{
+  font-size: 30px;
+  padding-top: 25%;
+  color: black;
+}
+
+.texto{
+  color: White;
+  padding-left: 45%;
+  font-size: 40px;
+}
+
+ body{
+   background-color: black;
+}
+
+boton{
+  float: right;
+}
