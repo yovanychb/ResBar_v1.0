@@ -7,32 +7,37 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="./css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="./css/barra-lateral.css">
     <link rel="stylesheet" href="./css/inicio.css">
+    <link href="css.css" rel="stylesheet">
+    <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
+
     <title>Fraga Caffe</title>
 
   </head>
   <body>
     <nav class="navbar navbar-inverse bg-inverse">
-      <h2 class="texto">ResBar</h2>
+      <h2 class="texto">RestBar</h2>
     </nav>
 
-    
     <div class="container slider" >
 
     </div>
     <div class="menu">
-      <ul class="nav flex-column">
-        <li class="nav-item">
-          <a class="nav-link active textoMenu active" href="#">-> Clientes </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link textoMenu" href="#">-> Proveedores</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link textoMenu" href="#">-> Configuración</a>
-        </li>
+      <ul>
+         <li><a href=""><span class="fa fa-home"></span>Inicio</a></li>
+         <li><a href=""><span class="fa fa-users"></span>Ordenes</a>
+            <ul>
+               <li><a href=""><span class="fa fa-plus"></span>Agregar Orden</a></li>
+               <li><a href=""><span class="fa fa-edit"></span>Modificar Orden</a></li>
+               <li><a href=""><span class="fa fa-remove"></span>Borrar Orden</a></li>
+            </ul>
+         </li>
+         <li><a href=""><span class="fa fa-desktop"></span>Menú</a></li>
+         <li><a href=""><span class="fa fa-database"></span>Datos</a></li>
+         <li><a href=""><span class="fa fa-home"></span>Sobre Nosotros</a></li>
       </ul>
-    </div>
+   </div>
 
 
     <!-- Optional JavaScript -->
