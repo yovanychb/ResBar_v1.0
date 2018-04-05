@@ -1,18 +1,17 @@
 .slider{
   top: 0;
   background: url("../img/fraga.jpg");
-  height: 89vh;
-  width: 90%;
+  height: 80vh;
+  width: 79%;
   background-size: cover;
   background-position: center;
   float: right;
 }
 
 .menu{
-  background-color: #F7D358;
   float:left;
-  width: 10px;
-  height: 89vh;
+  width: 11px;
+  height: 85vh;
 }
 
 .textoMenu{
@@ -31,6 +30,3 @@
    background-color: black;
 }
 
-boton{
-  float: right;
-}

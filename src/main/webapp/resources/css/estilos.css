@@ -1,0 +1,18 @@
+.fondoInicio{
+    background-color: #F1C40F;
+}
+
+.fondoOrden{
+    background-color: #c0a16b;
+}
+.datos{
+    padding-top: 2%;
+}
+
+.orden{
+    font-size: 30px;
+}
+
+.fondoProducto{
+    background-color: #c8cbcf;
+}

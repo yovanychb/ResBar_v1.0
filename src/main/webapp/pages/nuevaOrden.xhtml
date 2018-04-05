@@ -7,17 +7,17 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
         <title>ResBar</title>
+        <link href="../resources/css/estilos.css" rel="stylesheet" type="text/css" media="all" />
     </h:head>
-    <h:body>
+    <h:body  class="fondoOrden">
         <f:view>
             <h:form id="form">
                 
-                <p:menubar>
+                <p:menubar class="orden">
                     <p:menuitem value="Ordenes" icon="ui-icon-home" url="../index.jsf"/>
-                    
                 </p:menubar>
 
-                <h:panelGrid id="grid" columns="2">
+                <h:panelGrid id="grid" columns="2" class="datos">
                     <p:outputLabel  for="mesa" value="Mesa: " />
                     <p:inputText id="mesa" value="#{frmOrden.orden.mesa}" class="dialog-txt"/>
 
@@ -32,7 +32,7 @@
                                         
                 </h:panelGrid>
                 
-                <p:commandButton value="Agregar Productos" actionListener="#{frmproductos.redirect()}" icon="ui-icon-plusthick"/>
+                <p:commandButton class="boton" value="Agregar Productos" actionListener="#{frmproductos.redirect()}" icon="ui-icon-plusthick"/>
                 
                 <p:dataTable id="detalleOrden"
                              var="producto" 
@@ -63,7 +63,6 @@
                 </p:dataTable>
             </h:form>
         </f:view>
-
     </h:body>
 </html>
 
