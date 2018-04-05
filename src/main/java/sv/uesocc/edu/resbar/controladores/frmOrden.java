@@ -30,6 +30,7 @@ public class frmOrden implements Serializable {
 
     private Orden orden;
     private List<Orden> ordenes;
+    private List<Orden> filtro;
 
     @PostConstruct
     public void init() {
@@ -77,6 +78,14 @@ public class frmOrden implements Serializable {
 
     public void setOrdenes(List<Orden> ordenes) {
         this.ordenes = ordenes;
+    }
+
+    public List<Orden> getFiltro() {
+        return filtro;
+    }
+
+    public void setFiltro(List<Orden> filtro) {
+        this.filtro = filtro;
     }
 
 }

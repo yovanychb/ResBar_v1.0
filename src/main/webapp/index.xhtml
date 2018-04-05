@@ -12,16 +12,15 @@
         <link href="../resources/css/font-awesome.min.css" rel="stylesheet" type="text/css" media="all"/>
         <link href="../resources/css/bootstrap.min.css" rel="stylesheet" type="text/css" media="all" />
         <link href="../resources/css/estilos.css" rel="stylesheet" type="text/css" media="all" />
-        
-    </h:head>
-    <h:body class="fondoProducto">
 
+    </h:head>
+    <h:body style="background-color: #c0a16b">
         <f:view>
             <h:form id="form">
 
-                <p:menubar class="orden">
+                <p:menubar style="font-size: larger">
                     <p:menuitem value="Home" icon="ui-icon-home" url="inicio.html"/>
-                    
+
                 </p:menubar>
 
 
@@ -34,14 +33,23 @@
                              emptyMessage="No se encontraron ordenes activas"
                              selectionMode="single"
                              selection="#{frmOrden.orden}"
-                             rowKey="#{orden.numero}">
+                             rowKey="#{orden.numero}"
+                             filteredValue="#{frmOrden.filtro}"
+                             style="width: 90%; padding-left: 5%;padding-top: 1.5%; padding-bottom: 2%">
 
                     <p:ajax event="rowSelect" update=":form:OpDetails" oncomplete="PF('Options').show()" />
-
                     <f:facet name="header">
-                        <h:outputText value="Ordenes Activas"/>                                  
+                        <p:outputPanel style="padding: 1%; border-bottom-style: dotted">
+                            <h:outputText value="Buscar Orden:  " />
+                            <p:inputText id="globalFilter" onkeyup="PF('tblOrdenes').filter()" style="width:20%" placeholder="Numero de orden..."/>
+                        </p:outputPanel>
                     </f:facet>
-                    <p:column headerText="Numero">
+                    <f:facet name="header" >
+                        <p:outputPanel style="padding: 0.5%">
+                            <h:outputText value="Ordenes Activas" style="font-size: larger"/> 
+                        </p:outputPanel>
+                    </f:facet>
+                    <p:column headerText="Numero" filterBy="#{orden.numero}" filterStyle="display:none" filterMatchMode="exact">
                         <h:outputText value="#{orden.numero}" />
                     </p:column>
                     <p:column headerText="Mesa">
@@ -53,15 +61,13 @@
                     <p:column headerText="Cliente">
                         <h:outputText value="#{orden.cliente}" />
                     </p:column>
-                    <p:column headerText="Descripcion">
-                        <h:outputText value="#{orden.descripcion}" />
-                    </p:column>
                     <p:column headerText="Total">
                         <h:outputText value="#{orden.total}" >
-                            <f:convertNumber type="currency" currencySymbol="$" />
+                            <f:convertNumber currencySymbol="$ " type="currency"/>
                         </h:outputText>
                     </p:column>
                 </p:dataTable>
+
 
                 <p:dialog header="Opciones" 
                           widgetVar="Options" 
@@ -69,10 +75,11 @@
                           showEffect="fade" 
                           hideEffect="fade" 
                           resizable="false"
-                          width="50%">
+                          width="50%"
+                          draggable="false">
 
-                    <p:outputPanel id="OpDetails" style="text-align:center;">
-                        <p:panelGrid  columns="4">
+                    <p:outputPanel id="OpDetails">
+                        <p:panelGrid  columns="4" style="border-style:hidden">
                             <p:commandButton value="Agregar Productos" id="agregar" icon="ui-icon-plus" />
                             <p:commandButton value="Imprimir Cuenta" id="imprimir" icon="ui-icon-print" />
                             <p:commandButton value="Modificar Cuenta" id="modificar" icon="ui-icon-pencil" />
@@ -80,12 +87,14 @@
                         </p:panelGrid>
                     </p:outputPanel>
                 </p:dialog>
-                <p:commandButton actionListener="#{frmOrden.nueva()}" value="Agregar Orden" icon="ui-icon-plusthick">
-                </p:commandButton>
+                <div align="right" style="padding-right: 5%">
+                    <p:commandButton actionListener="#{frmOrden.nueva()}" value="Agregar Orden" icon="ui-icon-plusthick">
+                    </p:commandButton>
+
+                </div>
 
             </h:form>
         </f:view>
-
 
     </h:body>
 

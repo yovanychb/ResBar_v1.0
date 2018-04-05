@@ -11,43 +11,49 @@
     </h:head>
     <h:body  class="fondoOrden">
         <f:view>
-            <h:form id="form">
-                
-                <p:menubar class="orden">
-                    <p:menuitem value="Ordenes" icon="ui-icon-home" url="../index.jsf"/>
+
+            <h:form id="from1">
+                <p:menubar>
+                    <p:menuitem value="Ordenes" icon="ui-icon-triangle-1-w" url="../index.jsf" style="font-size: larger"/>
                 </p:menubar>
 
-                <h:panelGrid id="grid" columns="2" class="datos">
+                <p:growl id="messages" showDetail="true"/>
+                <h:panelGrid id="grid" columns="2" class="datos" style="padding-left: 5%">
                     <p:outputLabel  for="mesa" value="Mesa: " />
-                    <p:inputText id="mesa" value="#{frmOrden.orden.mesa}" class="dialog-txt"/>
+                    <p:inputText id="mesa" value="#{frmproductos.cuenta.mesa}"/>
 
                     <p:outputLabel  for="mesero" value="Mesero: "/>
-                    <p:inputText id="mesero" value="#{frmOrden.orden.mesero}" class="dialog-txt"/>
+                    <p:inputText id="mesero" value="#{frmproductos.cuenta.mesero}"/>
 
                     <p:outputLabel  for="cliente" value="Cliente:"/>
-                    <p:inputText  id="cliente"  value="#{frmOrden.orden.cliente}" maxlength="45" size="25" />
+                    <p:inputText  id="cliente"  value="#{frmproductos.cuenta.cliente}" />
+
+                    <p:outputLabel  for="comentario" value="Comentario:"/>
+                    <p:inputTextarea  id="comentario"  value="#{frmproductos.cuenta.descripcion}"/>
 
                     <p:outputLabel  for="fecha" value="Fecha:"/>
                     <p:outputLabel id="fecha" value="#{frmOrden.fecha()}"/>
-                                        
+
                 </h:panelGrid>
-                
-                <p:commandButton class="boton" value="Agregar Productos" actionListener="#{frmproductos.redirect()}" icon="ui-icon-plusthick"/>
-                
+                <div style="position: absolute; right: 50%; top: 30%">
+                    <p:commandButton class="boton" value="Agregar Productos" actionListener="#{frmproductos.redirect()}" icon="ui-icon-plusthick" update="messages"/>
+                </div>
+            </h:form>
+            <h:form id="form" style="padding-top: 1%">
                 <p:dataTable id="detalleOrden"
                              var="producto" 
-                             value="#{frmproductos.detalle}" 
+                             value="#{frmproductos.productos}" 
                              widgetVar="tblOrdenes"
                              paginator="true"
                              rows="10"
                              emptyMessage="No se encontraron ordenes activas"
                              selectionMode="single"
                              selection="#{frmproductos.producto}"
-                             rowKey="#{producto.codigo}">
+                             rowKey="#{producto.codigo}"
+                             style="width: 90%; padding-left: 5%;padding-top: 1.5%; padding-bottom: 2%">
 
-                    
                     <f:facet name="header">
-                        <h:outputText value="Ordenes Activas"/>                                  
+                        <h:outputText value="Productos de la orden"/>                                  
                     </f:facet>
                     <p:column headerText="Producto">
                         <h:outputText value="#{producto.nombre}" />
@@ -61,6 +67,9 @@
                         </h:outputText>
                     </p:column>
                 </p:dataTable>
+                <div align="right" style="padding-right: 5%">
+                    <p:commandButton value="Hecho" actionListener="#{frmproductos.dashboard()}" icon="ui-icon-check"/>
+                </div>
             </h:form>
         </f:view>
     </h:body>
