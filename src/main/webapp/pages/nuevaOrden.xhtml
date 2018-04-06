@@ -44,10 +44,9 @@
                              var="producto" 
                              value="#{frmproductos.detalle}" 
                              widgetVar="tblOrdenes"
-                             paginator="true"
-                             rows="10"
                              emptyMessage="No se encontraron ordenes activas"
                              selectionMode="single"
+                             sortBy="#{producto.codigo}"
                              selection="#{frmproductos.producto}"
                              rowKey="#{producto.codigo}"
                              style="width: 90%; padding-left: 5%;padding-top: 1.5%; padding-bottom: 2%">
@@ -59,13 +58,24 @@
                         <h:outputText value="#{producto.nombre}" />
                     </p:column>
                     <p:column headerText="Cantidad">
-                        <h:outputText value="#{producto.cantidad}" />
+                        <p:spinner id="cantidad" value="#{producto.cantidad}" />
                     </p:column>
+                    
                     <p:column headerText="Total">
                         <h:outputText value="#{producto.precio*producto.cantidad}" >
                             <f:convertNumber type="currency" currencySymbol="$" />
                         </h:outputText>
                     </p:column>
+                    <p:column headerText="">
+                        <p:commandButton value="" icon="ui-icon-close" style="size: 10px"/>
+                    </p:column>
+                    <f:facet name="footer" >
+                        <p:outputPanel style="text-align: right" >
+                            <h:outputText value="Total: $ #{100.0}" />
+
+                        </p:outputPanel>
+                    </f:facet>
+
                 </p:dataTable>
                 <div align="right" style="padding-right: 5%">
                     <p:commandButton value="Hecho" actionListener="#{frmproductos.dashboard()}" icon="ui-icon-check"/>

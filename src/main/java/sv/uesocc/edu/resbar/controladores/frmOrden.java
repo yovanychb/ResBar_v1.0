@@ -19,6 +19,7 @@ import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import org.primefaces.event.SelectEvent;
 import sv.uesocc.edu.resbar.entities.Orden;
+import sv.uesocc.edu.resbar.entities.Producto;
 
 /**
  *
@@ -29,21 +30,44 @@ import sv.uesocc.edu.resbar.entities.Orden;
 public class frmOrden implements Serializable {
 
     private Orden orden;
+    private Producto prod;
     private List<Orden> ordenes;
+    private List<Orden> inicial;
     private List<Orden> filtro;
+    private Double efectivo;
+
+    public Double getEfectivo() {
+        return efectivo;
+    }
+
+    public List<Orden> getInicial() {
+        return inicial;
+    }
+
+    public void setInicial(List<Orden> inicial) {
+        this.inicial = inicial;
+    }
+
+    public void setEfectivo(Double efectivo) {
+        this.efectivo = efectivo;
+    }
 
     @PostConstruct
     public void init() {
         orden = new Orden();
         ordenes = new ArrayList<Orden>();
+        inicial = new ArrayList<Orden>();
     }
 
     public List<Orden> getOrdenes() {
         ordenes = new ArrayList<Orden>();
-
-        for (int i = 0; i < 20; i++) {
-
-            ordenes.add(new Orden(i, i, "Mesero " + i, "Cliente " + i, "descripcion", 0.0));
+        if (inicial.isEmpty()) {
+            for (int i = 0; i < 20; i++) {
+                ordenes.add(new Orden(i, i, "Mesero " + i, "Cliente " + i, "descripcion", 0.0));
+            }
+            inicial= ordenes;
+        }else{
+            ordenes = inicial;
         }
         return ordenes;
     }
@@ -68,6 +92,11 @@ public class frmOrden implements Serializable {
         return formateador.format(ahora);
     }
 
+    
+    public void remove() {
+        ordenes.remove(orden);
+    }
+
     public Orden getOrden() {
         return orden;
     }
@@ -86,6 +115,14 @@ public class frmOrden implements Serializable {
 
     public void setFiltro(List<Orden> filtro) {
         this.filtro = filtro;
+    }
+    
+     public Producto getProd() {
+        return prod;
+    }
+
+    public void setProd(Producto prod) {
+        this.prod = prod;
     }
 
 }
