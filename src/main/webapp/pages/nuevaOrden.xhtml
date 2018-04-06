@@ -8,6 +8,19 @@
     <h:head>
         <title>ResBar</title>
         <link href="../resources/css/estilos.css" rel="stylesheet" type="text/css" media="all" />
+        <link rel="stylesheet" href="../resources/vendor/bootstrap/css/bootstrap.min.css"/>
+        <!-- Font Awesome CSS-->
+        <link rel="stylesheet" href="../resources/vendor/font-awesome/css/font-awesome.min.css"/>
+        <!-- Fontastic Custom icon font-->
+        <link rel="stylesheet" href="../resources/css/fontastic.css"/>
+        <!-- Google fonts - Poppins -->
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,700"/>
+        <!-- theme stylesheet-->
+        <link rel="stylesheet" href="../resources/css/style.default.css" id="theme-stylesheet"/>
+        <!-- Custom stylesheet - for your changes-->
+        <link rel="stylesheet" href="../resources/css/custom.css"/>
+        <!-- Favicon-->
+        <link rel="shortcut icon" href="../resources/img/favicon.ico"/>
     </h:head>
     <h:body  class="fondoOrden">
         <f:view>
@@ -96,16 +109,25 @@
 
 
                     <h:form id="menu" style="position: absolute; left: 1%; top: 1%;right: 70%; width: 15%" >
-                        <p:menu>
-                            <p:submenu label="Menu">
-                                <p:menuitem value="Bebidas"  icon="fas fa-home" />
-                                <p:menuitem value="Postres" icon="fas fa-home" />
-                                <p:menuitem value="Boquitas" icon="fas fa-home" />
-                                <p:menuitem value="Entradas" icon="fas fa-home" />
-                                <p:menuitem value="Sopas" icon="fas fa-home" />
-                            </p:submenu>
-
-                        </p:menu>
+                        <nav class="side-navbar">
+                            <!-- Sidebar Header-->
+                            <div class="sidebar-header d-flex align-items-center">
+                                <div class="avatar"><img src="../resources/img/titulo.jpg" alt="..." class="img-fluid rounded-circle"/></div>
+                                <div class="title, titulo">
+                                    <h1 class="h4">Fraga Caffe</h1>
+                                </div>
+                            </div>
+                            <!-- Sidebar Navidation Menus--><span class="heading">CATEGORIAS</span>
+                            <ul class="list-unstyled">
+                                <li><a href="tables.html"> <i class="fa fa-coffee"></i>Bebidas Calientes </a></li>
+                                <li><a href="tables.html"> <i class="fa fa-beer"></i>Bebidas Frias </a></li>
+                                <li><a href="charts.html"> <i class="fa fa-cutlery"></i>Entradas </a></li>                    
+                                <li><a href="forms.html"> <i class="fa fa-glass"></i>Aperitivos </a></li>
+                                <li><a href="tables.html"> <i class="fa fa-spoon"></i>Sopas </a></li>
+                                <li><a href="charts.html"> <i class="fa fa-lemon-o"></i>Ensaladas </a></li>
+                                <li><a href="forms.html"> <i class="fa fa-shopping-basket"></i>Reposteria </a></li>
+                            </ul>       
+                        </nav>
                     </h:form>
                     <h:form id="form" style="position: absolute; left: 20%; top:1%;right: 2%; width: 75%">
 
