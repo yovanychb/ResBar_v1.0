@@ -94,6 +94,10 @@ public class frmProductos implements Serializable {
     public void dashboard() throws IOException {
         FacesContext.getCurrentInstance().getExternalContext().redirect("../index.jsf");
     }
+    
+    public void home() throws IOException {
+        FacesContext.getCurrentInstance().getExternalContext().redirect("../inicio.html");
+    }
 
     public void addMessage(String summary, String detail) {
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, summary, detail);

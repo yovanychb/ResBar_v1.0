@@ -33,20 +33,20 @@
                 <p:growl id="messages" showDetail="true"/>
                 <div class="columna">
                     <h:panelGrid id="grid" columns="2" class="datos" style="padding-left: 5%">
-                        <p:outputLabel  for="mesa" value="Mesa: " />
+                        <p:outputLabel  for="mesa" value="Mesa: " class="qq"/>
                         <p:inputText id="mesa" value="#{frmproductos.cuenta.mesa}"/>
 
-                        <p:outputLabel  for="mesero" value="Mesero: "/>
+                        <p:outputLabel  for="mesero" value="Mesero: " class="qq"/>
                         <p:inputText id="mesero" value="#{frmproductos.cuenta.mesero}"/>
 
-                        <p:outputLabel  for="cliente" value="Cliente:"/>
+                        <p:outputLabel  for="cliente" value="Cliente:" class="qq"/>
                         <p:inputText  id="cliente"  value="#{frmproductos.cuenta.cliente}" />
 
-                        <p:outputLabel  for="comentario" value="Comentario:"/>
+                        <p:outputLabel  for="comentario" value="Comentario:" class="qq"/>
                         <p:inputTextarea  id="comentario"  value="#{frmproductos.cuenta.descripcion}"/>
 
-                        <p:outputLabel  for="fecha" value="Fecha:"/>
-                        <p:outputLabel id="fecha" value="#{frmOrden.fecha()}"/>
+                        <p:outputLabel  for="fecha" value="Fecha:" class="qq"/>
+                        <p:outputLabel id="fecha" value="#{frmOrden.fecha()}" class="qq"/>
 
                     </h:panelGrid>
                 </div>
@@ -70,7 +70,7 @@
                         <f:facet name="header">
                             <h:outputText value="Productos de la orden"/>                                  
                         </f:facet>
-                        <p:column headerText="Producto">
+                        <p:column headerText="Producto" >
                             <h:outputText value="#{producto.nombre}" />
                         </p:column>
                         <p:column headerText="Cantidad">
@@ -82,8 +82,8 @@
                                 <f:convertNumber type="currency" currencySymbol="$" />
                             </h:outputText>
                         </p:column>
-                        <p:column headerText="" style="width: 8%">
-                            <p:commandButton value="" icon="ui-icon-close" style="size: 10px"/>
+                        <p:column headerText="" style="width: 17%">
+                            <p:commandButton value="Eliminar"/>
                         </p:column>
                         
                         <f:facet name="footer" >

@@ -78,7 +78,7 @@
                         </h:outputText>
                     </p:column>
                 </p:dataTable>
-                <div align="right" style="padding-right: 11%; margin-top:-1.8%">
+                <div align="right" style="padding-right: 11%; margin-top:-7%;">
                     <p:commandButton actionListener="#{frmOrden.nueva()}" value="Agregar Orden" icon="ui-icon-plusthick">
                     </p:commandButton>
 
@@ -95,13 +95,13 @@
                     <p:outputPanel id="OpDetails">
                         <p:panelGrid  columns="4" style="border-style:hidden">
                             <p:commandButton value="Agregar Productos" id="agregar" icon="ui-icon-plus" oncomplete="PF('Add').show()"/>
-                            <p:commandButton value="Imprimir Cuenta" id="imprimir" icon="ui-icon-print" />
+                            <p:commandButton value="Imprimir Cuenta" id="imprimir" icon="ui-icon-print" oncomplete="PF('imprimir').show()" />
                             <p:commandButton value="Modificar Cuenta" id="modificar" icon="ui-icon-pencil" actionListener="#{frmOrden.nueva()}"/>
                             <p:commandButton value="Cobrar" id="cobrar" icon="ui-icon-check" oncomplete="PF('Cobrar').show()"/>
                         </p:panelGrid>
                     </p:outputPanel>
                 </p:dialog>
-                
+
                 <p:dialog header="Cobrar Orden" 
                           widgetVar="Cobrar" 
                           modal="true" 
@@ -126,7 +126,28 @@
                         </p:panelGrid>
                     </p:outputPanel>
                 </p:dialog>
-                
+
+                <p:dialog header="Imprimir" 
+                          widgetVar="imprimir" 
+                          modal="true" 
+                          showEffect="fade" 
+                          hideEffect="fade" 
+                          resizable="false"
+                          width="32%"
+                          draggable="false">
+
+                    <p:outputPanel id="pnlimp">
+                        <p:outputLabel  value="Ticket "/>
+                        <p:outputLabel  value="Esto seria el cuerpo del ticket "/>
+                        <p:panelGrid columns="2">                          
+                            <p:commandButton  value="Cancelar" icon="ui-icon-close" oncomplete="PF('imprimir').hide()" update=":form:OpDetails">
+                            </p:commandButton>
+                            <p:commandButton  value="Imprimir" icon="ui-icon-print" update="@all">
+                            </p:commandButton>
+                        </p:panelGrid>
+                    </p:outputPanel>
+                </p:dialog>
+
                 <p:dialog header="Agregar Prductos"
                           position="center"
                           widgetVar="Add" 
