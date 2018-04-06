@@ -31,67 +31,73 @@
                 </p:menubar>
 
                 <p:growl id="messages" showDetail="true"/>
-                <h:panelGrid id="grid" columns="2" class="datos" style="padding-left: 5%">
-                    <p:outputLabel  for="mesa" value="Mesa: " />
-                    <p:inputText id="mesa" value="#{frmproductos.cuenta.mesa}"/>
+                <div class="columna">
+                    <h:panelGrid id="grid" columns="2" class="datos" style="padding-left: 5%">
+                        <p:outputLabel  for="mesa" value="Mesa: " />
+                        <p:inputText id="mesa" value="#{frmproductos.cuenta.mesa}"/>
 
-                    <p:outputLabel  for="mesero" value="Mesero: "/>
-                    <p:inputText id="mesero" value="#{frmproductos.cuenta.mesero}"/>
+                        <p:outputLabel  for="mesero" value="Mesero: "/>
+                        <p:inputText id="mesero" value="#{frmproductos.cuenta.mesero}"/>
 
-                    <p:outputLabel  for="cliente" value="Cliente:"/>
-                    <p:inputText  id="cliente"  value="#{frmproductos.cuenta.cliente}" />
+                        <p:outputLabel  for="cliente" value="Cliente:"/>
+                        <p:inputText  id="cliente"  value="#{frmproductos.cuenta.cliente}" />
 
-                    <p:outputLabel  for="comentario" value="Comentario:"/>
-                    <p:inputTextarea  id="comentario"  value="#{frmproductos.cuenta.descripcion}"/>
+                        <p:outputLabel  for="comentario" value="Comentario:"/>
+                        <p:inputTextarea  id="comentario"  value="#{frmproductos.cuenta.descripcion}"/>
 
-                    <p:outputLabel  for="fecha" value="Fecha:"/>
-                    <p:outputLabel id="fecha" value="#{frmOrden.fecha()}"/>
+                        <p:outputLabel  for="fecha" value="Fecha:"/>
+                        <p:outputLabel id="fecha" value="#{frmOrden.fecha()}"/>
 
-                </h:panelGrid>
-                <div style="position: absolute; right: 50%; top: 30%">
+                    </h:panelGrid>
+                </div>
+                <div style="position: absolute; right: 80%; top: 55%">
                     <p:commandButton class="boton" value="Agregar Productos" oncomplete="PF('Options').show()" icon="ui-icon-plusthick" update="messages :addproducto"/>
                 </div>
             </h:form>
             <h:form id="form" style="padding-top: 1%">
-                <p:dataTable id="detalleOrden"
-                             var="producto" 
-                             value="#{frmproductos.detalle}" 
-                             widgetVar="tblOrdenes"
-                             emptyMessage="No se encontraron ordenes activas"
-                             selectionMode="single"
-                             sortBy="#{producto.codigo}"
-                             selection="#{frmproductos.producto}"
-                             rowKey="#{producto.codigo}"
-                             style="width: 90%; padding-left: 5%;padding-top: 1.5%; padding-bottom: 2%">
+                <div>
+                    <p:dataTable id="detalleOrden"
+                                 var="producto" 
+                                 value="#{frmproductos.detalle}" 
+                                 widgetVar="tblOrdenes"
+                                 emptyMessage="No se encontraron ordenes activas"
+                                 selectionMode="single"
+                                 scrollable="true"
+                                 scrollHeight="300"
+                                 sortBy="#{producto.codigo}"
+                                 selection="#{frmproductos.producto}"
+                                 rowKey="#{producto.codigo}"
+                                 style="width: 84%; padding-left: 30%;padding-top: 1.5%; padding-bottom: 2%">
 
-                    <f:facet name="header">
-                        <h:outputText value="Productos de la orden"/>                                  
-                    </f:facet>
-                    <p:column headerText="Producto">
-                        <h:outputText value="#{producto.nombre}" />
-                    </p:column>
-                    <p:column headerText="Cantidad">
-                        <p:spinner id="cantidad" value="#{producto.cantidad}" />
-                    </p:column>
-                    
-                    <p:column headerText="Total">
-                        <h:outputText value="#{producto.precio*producto.cantidad}" >
-                            <f:convertNumber type="currency" currencySymbol="$" />
-                        </h:outputText>
-                    </p:column>
-                    <p:column headerText="">
-                        <p:commandButton value="" icon="ui-icon-close" style="size: 10px"/>
-                    </p:column>
-                    <f:facet name="footer" >
-                        <p:outputPanel style="text-align: right" >
-                            <h:outputText value="Total: $ #{100.0}" />
+                        <f:facet name="header">
+                            <h:outputText value="Productos de la orden"/>                                  
+                        </f:facet>
+                        <p:column headerText="Producto">
+                            <h:outputText value="#{producto.nombre}" />
+                        </p:column>
+                        <p:column headerText="Cantidad">
+                            <p:spinner id="cantidad" value="#{producto.cantidad}" />
+                        </p:column>
 
-                        </p:outputPanel>
-                    </f:facet>
+                        <p:column headerText="Total" style="width: 15%">
+                            <h:outputText value="#{producto.precio*producto.cantidad}" >
+                                <f:convertNumber type="currency" currencySymbol="$" />
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="" style="width: 8%">
+                            <p:commandButton value="" icon="ui-icon-close" style="size: 10px"/>
+                        </p:column>
+                        <f:facet name="footer" >
+                            <p:outputPanel style="text-align: right" >
+                                <h:outputText value="Total: $ #{100.0}" />
 
-                </p:dataTable>
-                <div align="right" style="padding-right: 5%">
-                    <p:commandButton value="Hecho" actionListener="#{frmproductos.dashboard()}" icon="ui-icon-check"/>
+                            </p:outputPanel>
+                        </f:facet>
+
+                    </p:dataTable>
+                    <div align="right" style="padding-right: 5%">
+                        <p:commandButton value="Hecho" actionListener="#{frmproductos.dashboard()}" icon="ui-icon-check"/>
+                    </div>
                 </div>
             </h:form>
 
@@ -119,13 +125,13 @@
                             </div>
                             <!-- Sidebar Navidation Menus--><span class="heading">CATEGORIAS</span>
                             <ul class="list-unstyled">
-                                <li><a href="tables.html"> <i class="fa fa-coffee"></i>Bebidas Calientes </a></li>
-                                <li><a href="tables.html"> <i class="fa fa-beer"></i>Bebidas Frias </a></li>
-                                <li><a href="charts.html"> <i class="fa fa-cutlery"></i>Entradas </a></li>                    
-                                <li><a href="forms.html"> <i class="fa fa-glass"></i>Aperitivos </a></li>
-                                <li><a href="tables.html"> <i class="fa fa-spoon"></i>Sopas </a></li>
-                                <li><a href="charts.html"> <i class="fa fa-lemon-o"></i>Ensaladas </a></li>
-                                <li><a href="forms.html"> <i class="fa fa-shopping-basket"></i>Reposteria </a></li>
+                                <li><a href="#"> <i class="fa fa-coffee"></i>Bebidas Calientes </a></li>
+                                <li><a href="#"> <i class="fa fa-beer"></i>Bebidas Frias </a></li>
+                                <li><a href="#"> <i class="fa fa-cutlery"></i>Entradas </a></li>                    
+                                <li><a href="#"> <i class="fa fa-glass"></i>Aperitivos </a></li>
+                                <li><a href="#"> <i class="fa fa-spoon"></i>Sopas </a></li>
+                                <li><a href="#"> <i class="fa fa-lemon-o"></i>Ensaladas </a></li>
+                                <li><a href="#"> <i class="fa fa-shopping-basket"></i>Reposteria </a></li>
                             </ul>       
                         </nav>
                     </h:form>
