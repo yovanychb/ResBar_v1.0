@@ -55,15 +55,13 @@
                 </div>
             </h:form>
             <h:form id="form" style="padding-top: 1%">
-                <div>
+                <div style="height: 300px">
                     <p:dataTable id="detalleOrden"
                                  var="producto" 
                                  value="#{frmproductos.detalle}" 
                                  widgetVar="tblOrdenes"
                                  emptyMessage="No se encontraron ordenes activas"
                                  selectionMode="single"
-                                 scrollable="true"
-                                 scrollHeight="300"
                                  sortBy="#{producto.codigo}"
                                  selection="#{frmproductos.producto}"
                                  rowKey="#{producto.codigo}"
@@ -87,6 +85,7 @@
                         <p:column headerText="" style="width: 8%">
                             <p:commandButton value="" icon="ui-icon-close" style="size: 10px"/>
                         </p:column>
+                        
                         <f:facet name="footer" >
                             <p:outputPanel style="text-align: right" >
                                 <h:outputText value="Total: $ #{100.0}" />
