@@ -62,7 +62,7 @@ public class frmOrden implements Serializable {
     public List<Orden> getOrdenes() {
         ordenes = new ArrayList<Orden>();
         if (inicial.isEmpty()) {
-            for (int i = 0; i < 20; i++) {
+            for (int i = 0; i < 10; i++) {
                 ordenes.add(new Orden(i, i, "Mesero " + i, "Cliente " + i, "descripcion", 0.0));
             }
             inicial= ordenes;

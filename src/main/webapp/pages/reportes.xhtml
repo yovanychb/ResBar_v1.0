@@ -1,12 +1,72 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Facelet Title</title>
+        <link href="../resources/css/estilos.css" rel="stylesheet" type="text/css" media="all" />
+        <!-- Bootstrap CSS-->
+        <link rel="stylesheet" href="../resources/vendor/bootstrap/css/bootstrap.min.css"/>
+        <!-- Font Awesome CSS-->
+        <link rel="stylesheet" href="../resources/vendor/font-awesome/css/font-awesome.min.css"/>
+        <!-- Fontastic Custom icon font-->
+        <link rel="stylesheet" href="../resources/css/fontastic.css"/>
+        <!-- Google fonts - Poppins -->
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,700"/>
+        <!-- theme stylesheet-->
+        <link rel="stylesheet" href="../resources/css/style.default.css" id="theme-stylesheet"/>
+        <!-- Custom stylesheet - for your changes-->
+        <link rel="stylesheet" href="../resources/css/custom.css"/>
+        <!-- Favicon-->
+        <link rel="shortcut icon" href="../resources/img/favicon.ico"/>
     </h:head>
-    <h:body>
-        Hello from Facelets
-    </h:body>
+    <h:body class="fondoOrden">
+        <p:menubar>
+            <p:menuitem value="Atras" icon="ui-icon-triangle-1-w" url="../inicio.html" style="font-size: larger"/>
+        </p:menubar>
+
+        <h:form id="form" style="position: absolute; left: 15%; top:11%;right: 15%; width: 70%;height: 50%">
+            <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+                <p:outputLabel for="console" value="Reporte: " />
+                <p:selectOneMenu id="console" value="#{frmReportes.titulo}" style="width:125px">
+                    <f:selectItem itemLabel="Select" itemValue="" />
+                    <f:selectItem itemLabel="Diario" itemValue="Diario" />
+                    <f:selectItem itemLabel="Mensual" itemValue="Mensual" />
+                    <f:selectItem itemLabel="Anual" itemValue="Anual" />
+                </p:selectOneMenu>
+            </h:panelGrid>
+            <p:dataTable id="repots"
+                         var="reportes" 
+                         value="#{frmReportes.ordenes}" 
+                         scrollable="true"
+                         scrollHeight="300"
+                         emptyMessage="No existe registro"
+                         rowKey="#{productos.codigo}"
+                         style="padding-bottom: 2%">
+
+
+                <f:facet name="header" >
+                    <p:outputPanel style="padding: 0.5%">
+                        <h:outputText value="Reporte" style="font-size: larger"/> 
+                    </p:outputPanel>
+                </f:facet>
+                <p:column headerText="Fecha">
+                    <h:outputText value="#{frmOrden.fecha()}" />
+                </p:column>
+                <p:column headerText="Numero" >
+                    <h:outputText value="#{reportes.numero}" />
+                </p:column>
+                <p:column headerText="Precio">
+                    <h:outputText value="#{reportes.total}" />
+                </p:column>
+                
+
+            </p:dataTable>
+            <div align="right" style="padding-right: 5%">
+                <p:commandButton value="Regresar" actionListener="#{frmReportes.undirect()}" icon="ui-icon-close"/>
+            </div>
+        </h:form>    </h:body>
 </html>
 

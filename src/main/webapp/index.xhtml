@@ -160,7 +160,7 @@
                             </ul>       
                         </nav>
                     </h:form>
-                    <h:form id="form" style="position: absolute; left: 20%; top:1%;right: 2%; width: 75%">
+                    <h:form id="form" style="position: absolute; left: 25%; top:1%;right: 2%; width: 73%">
 
                         <p:dataTable id="products"
                                      var="productos" 
@@ -195,6 +195,7 @@
 
                         </p:dataTable>
                         <div align="right" style="padding-right: 5%">
+                            <p:commandButton value="Cancelar" oncomplete="PF('Options').hide()" icon="ui-icon-close" update=":form"/>
                             <p:commandButton value="Hecho" oncomplete="PF('Options').hide()" icon="ui-icon-check" update=":form"/>
                         </div>
                     </h:form>
