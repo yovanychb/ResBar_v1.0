@@ -31,25 +31,25 @@
 
             <h:form id="menu" style="position: absolute; left: 1%; top: 11%;right: 75%; width: 20%" >
                 <nav class="side-navbar">
-                    <!-- Sidebar Header-->
-                    <div class="sidebar-header d-flex align-items-center">
-                        <div class="avatar"><img src="../resources/img/titulo.jpg" alt="..." class="img-fluid rounded-circle"/></div>
-                        <div class="title, titulo">
-                            <h1 class="h4">Fraga Caffe</h1>
-                        </div>
-                    </div>
-                    <!-- Sidebar Navidation Menus--><span class="heading">CATEGORIAS</span>
-                    <ul class="list-unstyled">
-                        <li><a href="tables.html"> <i class="fa fa-coffee"></i>Bebidas Calientes </a></li>
-                        <li><a href="tables.html"> <i class="fa fa-beer"></i>Bebidas Frias </a></li>
-                        <li><a href="charts.html"> <i class="fa fa-cutlery"></i>Entradas </a></li>                    
-                        <li><a href="forms.html"> <i class="fa fa-glass"></i>Aperitivos </a></li>
-                        <li><a href="tables.html"> <i class="fa fa-spoon"></i>Sopas </a></li>
-                        <li><a href="charts.html"> <i class="fa fa-lemon-o"></i>Ensaladas </a></li>
-                        <li><a href="forms.html"> <i class="fa fa-shopping-basket"></i>Reposteria </a></li>
-                    </ul>       
-                </nav>
-                <p:commandButton value="Agregar Productos" oncomplete="PF('Add').show()" update=":form:OpDetails"/>
+          <!-- Sidebar Header-->
+          <div class="sidebar-header d-flex align-items-center">
+            <div class="avatar"><img src="../resources/img/titulo.jpg" alt="..." class="img-fluid rounded-circle"/></div>
+            <div class="title, titulo">
+              <h1 class="h4">Fraga Caffe</h1>
+            </div>
+          </div>
+          <!-- Sidebar Navidation Menus--><span class="heading">CATEGORIAS</span>
+          <ul class="list-unstyled">
+                    <li><a href="tables.html"> <i class="fa fa-coffee"></i>Bebidas Calientes </a></li>
+                    <li><a href="tables.html"> <i class="fa fa-beer"></i>Bebidas Frias </a></li>
+                    <li><a href="charts.html"> <i class="fa fa-cutlery"></i>Entradas </a></li>                    
+                    <li><a href="forms.html"> <i class="fa fa-glass"></i>Aperitivos </a></li>
+                    <li><a href="tables.html"> <i class="fa fa-spoon"></i>Sopas </a></li>
+                    <li><a href="charts.html"> <i class="fa fa-lemon-o"></i>Ensaladas </a></li>
+                    <li><a href="forms.html"> <i class="fa fa-shopping-basket"></i>Postres </a></li>
+          </ul>       
+        </nav>
+                <p:commandButton oncomplete="PF('Add').show()" value="Agregar Productos"/>
             </h:form>
             <h:form id="form" style="position: absolute; left: 20%; top:11%;right: 2%; width: 75%;height: 50%">
 
@@ -91,7 +91,7 @@
                     </p:column>
 
                 </p:dataTable>
-                <div align="right" style="padding-right: 5%">
+                <div align="right" style="padding-right:0%; margin-top: -1.8%">
                     <p:commandButton value="Hecho" actionListener="#{frmproductos.undirect()}" icon="ui-icon-check"/>
                 </div>
                 <p:dialog header="Opciones" 
