@@ -42,7 +42,7 @@ public class frmProductos implements Serializable {
         producto = new Producto();
         productos = new ArrayList<Producto>();
         lista = new ArrayList<Producto>();
-        detalle = getProductos();
+        
 
     }
 
@@ -65,6 +65,7 @@ public class frmProductos implements Serializable {
                 this.producto = (Producto) se.getObject();
                 producto.setCantidad(producto.getCantidad() + 1);
                 lista.set(producto.getCodigo(), producto);
+                detalle.remove(producto);
                 detalle.add(producto);
             } catch (Exception e) {
                 Logger.getLogger(getClass().getName()).log(Level.SEVERE, e.getMessage(), e);
@@ -75,9 +76,7 @@ public class frmProductos implements Serializable {
     public void redirect() throws IOException {
         try {
             //if (cuenta.getMesa().toString().isEmpty() || cuenta.getMesero().isEmpty() || cuenta.getCliente().isEmpty()) {
-            if (cuenta.getMesero().isEmpty()) {
-                addMessage("Error", "No se ha asignado un mesero a la orden");
-            } else if (cuenta.getMesa()==null) {
+            if (cuenta.getMesa()==null) {
                 addMessage("Error", "No se ha asignado una mesa a la orden");
             } else {
                 FacesContext.getCurrentInstance().getExternalContext().redirect("productos.jsf");

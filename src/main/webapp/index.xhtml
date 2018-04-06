@@ -19,34 +19,35 @@
             <h:form id="form">
 
                 <p:menubar style="font-size: larger">
-                    <p:menuitem value="Home" icon="ui-icon-home" url="inicio.html"/>
+                    <p:menuitem value=" Home" icon="ui-icon-home" url="inicio.html"/>
 
                 </p:menubar>
-
 
                 <p:dataTable id="ordenes"
                              var="orden" 
                              value="#{frmOrden.ordenes}" 
                              widgetVar="tblOrdenes"
-                             paginator="true"
-                             rows="10"
                              emptyMessage="No se encontraron ordenes activas"
                              selectionMode="single"
+                             scrollable="true"
+                             scrollHeight="400"
                              selection="#{frmOrden.orden}"
                              rowKey="#{orden.numero}"
                              filteredValue="#{frmOrden.filtro}"
-                             style="width: 90%; padding-left: 5%;padding-top: 1.5%; padding-bottom: 2%">
+                             style="width: 90%; padding-left: 5%;padding-top: 1.5%; padding-bottom: 2%"
+                             >
 
                     <p:ajax event="rowSelect" update=":form:OpDetails" oncomplete="PF('Options').show()" />
-                    <f:facet name="header">
-                        <p:outputPanel style="padding: 1%; border-bottom-style: dotted">
-                            <h:outputText value="Buscar Orden:  " />
-                            <p:inputText id="globalFilter" onkeyup="PF('tblOrdenes').filter()" style="width:20%" placeholder="Numero de orden..."/>
+
+                    <f:facet name="header" >
+                        <p:outputPanel style="padding: 0.5%; border-bottom-style: dotted">
+                            <h:outputText value="Ordenes Activas" style="font-size: larger"/> 
                         </p:outputPanel>
                     </f:facet>
-                    <f:facet name="header" >
+                    <f:facet name="header">
                         <p:outputPanel style="padding: 0.5%">
-                            <h:outputText value="Ordenes Activas" style="font-size: larger"/> 
+                            <h:outputText value="Buscar Orden:  " />
+                            <p:inputText id="globalFilter" onkeyup="PF('tblOrdenes').filter()" style="width:20%" placeholder="Numero de orden..."/>
                         </p:outputPanel>
                     </f:facet>
                     <p:column headerText="Numero" filterBy="#{orden.numero}" filterStyle="display:none" filterMatchMode="exact">
@@ -67,7 +68,6 @@
                         </h:outputText>
                     </p:column>
                 </p:dataTable>
-
 
                 <p:dialog header="Opciones" 
                           widgetVar="Options" 
