@@ -18,6 +18,7 @@ import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import org.primefaces.event.SelectEvent;
+import sv.uesocc.edu.resbar.entities.Categoria;
 import sv.uesocc.edu.resbar.entities.Orden;
 import sv.uesocc.edu.resbar.entities.Producto;
 
@@ -35,22 +36,10 @@ public class frmOrden implements Serializable {
     private List<Orden> inicial;
     private List<Orden> filtro;
     private Double efectivo;
+    private int numero;
+    private List<Categoria> categorias;
+    private List<Categoria> modificar;
 
-    public Double getEfectivo() {
-        return efectivo;
-    }
-
-    public List<Orden> getInicial() {
-        return inicial;
-    }
-
-    public void setInicial(List<Orden> inicial) {
-        this.inicial = inicial;
-    }
-
-    public void setEfectivo(Double efectivo) {
-        this.efectivo = efectivo;
-    }
 
     @PostConstruct
     public void init() {
@@ -62,7 +51,7 @@ public class frmOrden implements Serializable {
     public List<Orden> getOrdenes() {
         ordenes = new ArrayList<Orden>();
         if (inicial.isEmpty()) {
-            for (int i = 0; i < 10; i++) {
+            for (int i = 0; i < 20; i++) {
                 ordenes.add(new Orden(i, i, "Mesero " + i, "Cliente " + i, "descripcion", 0.0));
             }
             inicial= ordenes;
@@ -75,7 +64,8 @@ public class frmOrden implements Serializable {
     public void onRowSelect(SelectEvent se) {
         if (se.getObject() != null) {
             try {
-                this.orden = (Orden) se.getObject();
+                orden = (Orden) se.getObject();
+                numero = orden.getNumero();
             } catch (Exception e) {
                 Logger.getLogger(getClass().getName()).log(Level.SEVERE, e.getMessage(), e);
             }
@@ -125,4 +115,43 @@ public class frmOrden implements Serializable {
         this.prod = prod;
     }
 
+    public int getNumero() {
+        return numero;
+    }
+
+    public void setNumero(int numero) {
+        this.numero = numero;
+    }
+
+    public Double getEfectivo() {
+        return efectivo;
+    }
+
+    public List<Orden> getInicial() {
+        return inicial;
+    }
+
+    public void setInicial(List<Orden> inicial) {
+        this.inicial = inicial;
+    }
+
+    public void setEfectivo(Double efectivo) {
+        this.efectivo = efectivo;
+    }
+
+    public List<Categoria> getCategorias() {
+        return categorias;
+    }
+
+    public void setCategorias(List<Categoria> categorias) {
+        this.categorias = categorias;
+    }
+    
+    public List<Categoria> getModificar() {
+        return modificar;
+    }
+
+    public void setModificar(List<Categoria> modificar) {
+        this.modificar = modificar;
+    }
 }

@@ -29,7 +29,7 @@
                 <p:menuitem value="Atras" icon="ui-icon-triangle-1-w" url="../inicio.html" style="font-size: larger"/>
             </p:menubar>
 
-            <h:form id="menu" style="position: absolute; left: 1%; top: 11%;right: 75%; width: 20%" >
+            <h:form id="menu" style="position: absolute; left: 5%; top: 11%;right: 70%; width: 8%" >
                 <nav class="side-navbar">
                     <!-- Sidebar Header-->
                     <div class="sidebar-header d-flex align-items-center">
@@ -51,7 +51,7 @@
                 </nav>
                 <p:commandButton oncomplete="PF('Add').show()" value="Agregar Productos"/>
             </h:form>
-            <h:form id="form" style="position: absolute; left: 20%; top:11%;right: 2%; width: 75%;height: 50%">
+            <h:form id="form" style="position: absolute; left: 31%; top:11%;right: 2%; width: 65%;height: 50%">
 
                 <p:dataTable id="products"
                              var="productos" 
@@ -82,10 +82,10 @@
                     <p:column headerText="Nombre" filterBy="#{productos.nombre}" filterStyle="display:none" filterMatchMode="exact">
                         <h:outputText value="#{productos.nombre}" />
                     </p:column>
-                    <p:column headerText="Precio">
+                    <p:column headerText="Precio" style="width: 20%">
                         <h:outputText value="#{productos.precio}" />
                     </p:column>
-                    <p:column headerText="Opciones" style="width: 20%">
+                    <p:column headerText="Opciones" style="width: 30%">
                         <p:commandButton value="Editar" oncomplete="PF('Add').show()"/>
                         <p:commandButton value="Borar"/>
                     </p:column>
@@ -100,7 +100,7 @@
                           showEffect="fade" 
                           hideEffect="fade" 
                           resizable="false"
-                          width="32%"
+                          width="42%"
                           draggable="false">
 
                     <p:outputPanel id="OpDetails">

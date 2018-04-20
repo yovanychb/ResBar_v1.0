@@ -1,7 +1,7 @@
 .slider{
   top: 0;
   background: url("../img/fraga.jpg");
-  height: 80vh;
+  height: 75vh;
   width: 79%;
   background-size: cover;
   background-position: center;
@@ -10,8 +10,8 @@
 
 .menu{
   float:left;
-  width: 11px;
-  height: 85vh;
+  width: 10px;
+  height: 80vh;
 }
 
 .textoMenu{
