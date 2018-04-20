@@ -8,6 +8,7 @@ package sv.uesocc.edu.resbar.controladores;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -17,6 +18,7 @@ import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import org.primefaces.event.SelectEvent;
+import sv.uesocc.edu.resbar.entities.Categoria;
 import sv.uesocc.edu.resbar.entities.Orden;
 import sv.uesocc.edu.resbar.entities.Producto;
 
@@ -30,11 +32,13 @@ public class frmProductos implements Serializable {
 
     private Producto producto;
     private Orden cuenta;
-
+    private Categoria cate;
+    private List<Categoria> cats;
     private List<Producto> productos = new ArrayList<Producto>();
     private List<Producto> lista;
     private List<Producto> detalle = new ArrayList<Producto>();
     private List<Producto> filtro;
+   
 
     @PostConstruct
     public void init() {
@@ -85,6 +89,10 @@ public class frmProductos implements Serializable {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, e.getMessage(), e);
         }
 
+    }
+    
+    public void focus(){
+        
     }
 
     public void undirect() throws IOException {
@@ -143,4 +151,30 @@ public class frmProductos implements Serializable {
     public void setCuenta(Orden cuenta) {
         this.cuenta = cuenta;
     }
+
+    public Categoria getCate() {
+        return cate;
+    }
+
+    public void setCate(Categoria cate) {
+        this.cate= cate;
+    }
+
+    public List<Categoria> getCats() {
+        cats = new ArrayList<Categoria>();
+        cats.add(new Categoria(1,"Bebidas frias"));
+        cats.add(new Categoria(2,"Bebidas calientes"));
+        cats.add(new Categoria(3,"Postres"));
+        cats.add(new Categoria(4,"Sopas"));
+        cats.add(new Categoria(5,"Entradas"));
+        cats.add(new Categoria(6,"Aperitivos"));
+        cats.add(new Categoria(7,"Ensaladas"));
+        return cats;
+    }
+
+    public void setCats(List<Categoria> cats) {
+        this.cats = cats;
+    }
+    
+    
 }

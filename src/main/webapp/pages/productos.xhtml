@@ -25,11 +25,12 @@
     </h:head>
     <h:body class="fondoOrden">
         <f:view>
+            <p:spacer/> 
             <p:menubar>
                 <p:menuitem value="Atras" icon="ui-icon-triangle-1-w" url="../inicio.html" style="font-size: larger"/>
             </p:menubar>
 
-            <h:form id="menu" style="position: absolute; left: 5%; top: 11%;right: 70%; width: 8%" >
+            <h:form id="menu" style="position: absolute; left: 5%; top: 13%;right: 70%; width: 8%" >
                 <nav class="side-navbar">
                     <!-- Sidebar Header-->
                     <div class="sidebar-header d-flex align-items-center">
@@ -49,9 +50,9 @@
                         <li><a href="#"> <i class="fa fa-shopping-basket"></i>Postres </a></li>
                     </ul>       
                 </nav>
-                <p:commandButton oncomplete="PF('Add').show()" value="Agregar Productos"/>
+                <p:commandButton value="Administrar Categorias" oncomplete="PF('Categorias').show()"/>
             </h:form>
-            <h:form id="form" style="position: absolute; left: 31%; top:11%;right: 2%; width: 65%;height: 50%">
+            <h:form id="form" style="position: absolute; left: 31%; top:13%;right: 2%; width: 65%;height: 50%">
 
                 <p:dataTable id="products"
                              var="productos" 
@@ -92,51 +93,127 @@
 
                 </p:dataTable>
                 <div align="right" style="padding-right:0%; margin-top: -1.8%">
-                    <p:commandButton value="Hecho" actionListener="#{frmproductos.home()}" icon="ui-icon-check"/>
+                    <p:spacer height="10px"/>
+                    <p:commandButton oncomplete="PF('Add').show()" value="Agregar Productos" style="position: absolute; left: 1px; margin-top: 10px"/>
+
+                    <p:commandButton value="Hecho" actionListener="#{frmproductos.home()}" icon="ui-icon-check" style="margin-top: 10px"/>
                 </div>
-                <p:dialog header="Opciones" 
-                          widgetVar="Add" 
-                          modal="true" 
-                          showEffect="fade" 
-                          hideEffect="fade" 
-                          resizable="false"
-                          width="42%"
-                          draggable="false">
-
-                    <p:outputPanel id="OpDetails">
-                        <p:panelGrid  columns="2" style="border-style:hidden">
-                            <p:outputLabel  for="categoria" value="Categoria: " />
-                            <p:selectOneMenu id="categoria" value="#{frmReportes.titulo}" style="width:125px">
-                                <f:selectItem itemLabel="Select" itemValue="" />
-                                <f:selectItem itemLabel="Bebidas Calientes" itemValue="Bebidas Calientes" />
-                                <f:selectItem itemLabel="Bebidas Frias" itemValue="Bebidas Frias" />
-                                <f:selectItem itemLabel="Entradas" itemValue="Entradas" />
-                                <f:selectItem itemLabel="Aperitivos" itemValue="Aperitivos" />
-                                <f:selectItem itemLabel="Sopas" itemValue="Sopas" />
-                                <f:selectItem itemLabel="Ensaladas" itemValue="Ensaladas" />
-                                <f:selectItem itemLabel="Postres" itemValue="Postres" />
-                            </p:selectOneMenu>
-
-                            <p:outputLabel  for="nombre" value="Nombre: "/>
-                            <p:inputText id="nombre" value="Nombre"/>
-
-                            <p:outputLabel  for="precio" value="Precio: "/>
-                            <p:inputText  id="precio"  value="Precio" />
-
-                            <p:outputLabel for="console" value="Enviar a: " />
-                            <p:selectOneRadio id="console" value="none">
-                                <f:selectItem itemLabel="Cocina" itemValue="Xbox One" />
-                                <f:selectItem itemLabel="Bebida" itemValue="PS4" />
-                            </p:selectOneRadio>
-                            <p:commandButton  value="Cancelar" icon="ui-icon-close" update="@all">
-                            </p:commandButton>
-                            <p:commandButton  value="Guardar"  icon="ui-icon-check" update="@all">
-                            </p:commandButton>
-                        </p:panelGrid>
-                    </p:outputPanel>
-                </p:dialog> 
             </h:form>
         </f:view>
+        <p:dialog header="Opciones" 
+                  widgetVar="Add" 
+                  modal="true" 
+                  showEffect="fade" 
+                  hideEffect="fade" 
+                  resizable="false"
+                  width="42%"
+                  draggable="false">
+
+            <p:outputPanel id="OpDetails">
+                <p:panelGrid  columns="2" style="border-style:hidden">
+                    <p:outputLabel  for="categoria" value="Categoria: " />
+                    <p:selectOneMenu id="categoria" value="#{frmReportes.titulo}" style="width:125px">
+
+                        <f:selectItem itemLabel="Select" itemValue="" />
+                        <f:selectItem itemLabel="Bebidas Calientes" itemValue="Bebidas Calientes" />
+                        <f:selectItem itemLabel="Bebidas Frias" itemValue="Bebidas Frias" />
+                        <f:selectItem itemLabel="Entradas" itemValue="Entradas" />
+                        <f:selectItem itemLabel="Aperitivos" itemValue="Aperitivos" />
+                        <f:selectItem itemLabel="Sopas" itemValue="Sopas" />
+                        <f:selectItem itemLabel="Ensaladas" itemValue="Ensaladas" />
+                        <f:selectItem itemLabel="Postres" itemValue="Postres" />
+                    </p:selectOneMenu>
+
+                    <p:outputLabel  for="nombre" value="Nombre: "/>
+                    <p:inputText id="nombre" value="Nombre"/>
+
+                    <p:outputLabel  for="precio" value="Precio: "/>
+                    <p:inputText  id="precio"  value="Precio" />
+
+                    <p:outputLabel for="console" value="Enviar a: " />
+                    <p:selectOneRadio id="console" value="none">
+                        <f:selectItem itemLabel="Cocina" itemValue="Xbox One" />
+                        <f:selectItem itemLabel="Bebida" itemValue="PS4" />
+                    </p:selectOneRadio>
+                    <p:commandButton  value="Cancelar" icon="ui-icon-close" update="@all">
+                    </p:commandButton>
+                    <p:commandButton  value="Guardar"  icon="ui-icon-check" update="@all">
+                    </p:commandButton>
+                </p:panelGrid>
+            </p:outputPanel>
+        </p:dialog> 
+
+        <p:dialog header="Categorias" 
+                  widgetVar="Categorias" 
+                  modal="true" 
+                  showEffect="fade" 
+                  hideEffect="fade" 
+                  resizable="false"
+                  width="52%"
+                  draggable="false">
+
+            <h:form id="frmCate">
+                <p:dataTable id="categorias"
+                             var="categroia" 
+                             value="#{frmproductos.cats}" 
+                             scrollable="true"
+                             scrollHeight="370"
+                             emptyMessage="No se encontraron categorias"
+                             selectionMode="single"
+                             selection="#{frmproductos.cate}"
+                             rowKey="#{categroia.codigo}"
+                             editable="true"
+                             editMode="cell"
+                             style="width: 500px">
+
+                    <p:ajax event="cellEdit"/>
+
+                    <f:facet name="header" >
+                        <p:outputPanel style="padding: 0.5%">
+                            <h:outputText value="Categorias" style="font-size: larger"/> 
+                        </p:outputPanel>
+                    </f:facet>
+
+                    <p:column headerText="Nombre">
+                        <p:cellEditor>
+                            <f:facet name="output"><h:outputText value="#{categroia.nombre}" /></f:facet>
+                            <f:facet name="input"><p:inputText id="modelInput" value="#{categroia.nombre}" style="width:100%"/></f:facet>
+                        </p:cellEditor>
+
+                    </p:column>
+                    <p:column headerText="Opciones" style="width: 36%">
+                        <p:commandButton value="Editar" actionListener="#{frmproductos.focus()}"/>
+                        <p:commandButton value="Borar"/>
+                    </p:column>
+
+
+                </p:dataTable>
+                <p:panelGrid columns="3">
+                    <p:commandButton value="Agregar Nueva" oncomplete="PF('AddCate').show()"/>
+                    <p:commandButton value="Salir" oncomplete="PF('Categorias').hide()"/>
+                </p:panelGrid>
+            </h:form>
+        </p:dialog>
+        
+        <p:dialog  header="Agregar Categorias" 
+                   widgetVar="AddCate" 
+                   modal="true" 
+                   showEffect="fade" 
+                   hideEffect="fade" 
+                   resizable="false"
+                   width="32%"
+                   draggable="false">
+
+            <p:outputLabel  for="nombr" value="Nombre: "/>
+            <p:spacer width="5px"/>
+            <p:inputText id="nombr" value="Nombre de la categoria"/>
+            <p:spacer/>
+            <p:panelGrid columns="2">
+                <p:commandButton value="Cancelar" oncomplete="PF('AddCate').hide()"/>
+                <p:commandButton value="Guardar" oncomplete="PF('AddCate').hide()"/>
+            </p:panelGrid>
+        </p:dialog>
+
     </h:body>
 </html>
 
