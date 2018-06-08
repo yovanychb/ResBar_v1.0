@@ -13,7 +13,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
-import sv.uesocc.edu.resbar.entities.Orden;
+import clases.Orden;
 
 /**
  *
@@ -40,7 +40,7 @@ public class frmReportes implements Serializable{
     public List<Orden> getOrdenes() {
         ordenes = new ArrayList<Orden>();
         for (int i = 0; i < 10; i++) {
-            ordenes.add(new Orden(i, i, "Mesero " + i, "Cliente " + i, "descripcion", 10.0));
+//            ordenes.add(new Orden(i, i, "Mesero " + i, "Cliente " + i, "descripcion", 10.0));
         }
         return ordenes;
     }

@@ -4,7 +4,8 @@
       xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
     <h:head>
         <title>ResBar</title>
@@ -22,6 +23,8 @@
         <!-- Custom stylesheet - for your changes-->
         <link rel="stylesheet" href="resources/css/custom.css"/>
         <!-- Favicon-->
+        <link rel="stylesheet" href="resources/css/inicio.css"/>
+        
     </h:head>
 
     <h:body style="background-color: #c0a16b">
@@ -41,7 +44,7 @@
                              scrollable="true"
                              scrollHeight="400"
                              selection="#{frmOrden.orden}"
-                             rowKey="#{orden.numero}"
+                             rowKey="#{orden.idOrden}"
                              filteredValue="#{frmOrden.filtro}"
                              styleClass="tblOrdenes">
 
@@ -55,20 +58,23 @@
                     <f:facet name="header">
                         <p:outputPanel style="padding: 0.5%">
                             <h:outputText value="Buscar Orden:  " />
-                            <p:inputText id="globalFilter" onkeyup="PF('tblOrdenes').filter()" style="width:20%" placeholder="Numero de orden..."/>
+                            <p:inputText id="globalFilter" onkeyup="PF('tblOrdenes').filter()" style="width:20%" placeholder="Buscar orden..."/>
                         </p:outputPanel>
                     </f:facet>
-                    <p:column headerText="Numero" filterBy="#{orden.numero}" filterStyle="display:none" filterMatchMode="exact" style="width: 80px">
-                        <h:outputText value="#{orden.numero}" />
+                    <p:column headerText="Numero" filterBy="#{orden.idOrden}" filterStyle="display:none" filterMatchMode="exact" style="width: 80px">
+                        <h:outputText value="#{orden.idOrden}" />
                     </p:column>
-                    <p:column headerText="Mesa" style="width: 60px">
+                    <p:column headerText="Mesa" filterBy="#{orden.mesa}" filterStyle="display:none" filterMatchMode="exact" style="width: 90px">
                         <h:outputText value="#{orden.mesa}" />
                     </p:column>
-                    <p:column headerText="Mesero">
+                    <p:column headerText="Mesero" filterBy="#{orden.mesero}" filterStyle="display:none" filterMatchMode="exact">
                         <h:outputText value="#{orden.mesero}" />
                     </p:column>
-                    <p:column headerText="Cliente">
+                    <p:column headerText="Cliente" filterBy="#{orden.cliente}" filterStyle="display:none" filterMatchMode="exact">
                         <h:outputText value="#{orden.cliente}" />
+                    </p:column>
+                    <p:column headerText="Comentario" filterBy="#{orden.comentario}" filterStyle="display:none" filterMatchMode="exact">
+                        <h:outputText value="#{orden.comentario}" />
                     </p:column>
                     <p:column headerText="Total">
                         <h:outputText value="#{orden.total}" >
@@ -83,7 +89,7 @@
             </h:form>
         </f:view>
 
-        <p:dialog header="Opciones de la orden #{frmOrden.orden.numero}" 
+        <p:dialog header="Opciones de la orden #{frmOrden.orden.idOrden}" 
                   widgetVar="Options" 
                   modal="true"
                   showEffect="fade" 
@@ -102,7 +108,7 @@
             </h:form>
         </p:dialog>
 
-        <p:dialog header="Cobrar Orden #{frmOrden.orden.numero}" 
+        <p:dialog header="Cobrar Orden #{frmOrden.orden.idOrden}" 
                   widgetVar="Cobrar" 
                   modal="true" 
                   showEffect="fade" 
@@ -113,33 +119,118 @@
 
             <h:form id="frmCobrar">
                 <p:panelGrid  columns="2" style="border-style:hidden;">
+
                     <p:outputLabel  for="total" value="Total: "/>
-                    <p:inputText id="total" value="Total"/>
+                    <p:inputText disabled="true" id="total" value="#{frmOrden.orden.total}"/>
+
                     <p:outputLabel  for="efectivo" value="Efectivo: "/>
-                    <p:inputText id="efectivo" value="Efectivo"/>
-                    <p:outputLabel  for="cambio" value="Cambio: "/>
-                    <p:inputText id="cambio" value="Cambio"/>                            
+                    <p:inputText id="efectivo" value="#{frmOrden.efectivo}" placeholder="0.00">
+                        <p:ajax event="keyup" listener="#{frmOrden.cambio()}" update=":frmCobrar:cambio :frmCobrar:pnl" />
+                    </p:inputText>
+
+                    <p:outputLabel for="cambio" value="Cambio: "/>
+                    <p:inputText disabled="true" id="cambio" value="#{frmOrden.cambio}"/>    
+                </p:panelGrid>
+                <p:panelGrid  id="pnl" columns="2" style="border-style:hidden;">
                     <p:commandButton  value="Cancelar" icon="ui-icon-close" oncomplete="PF('Cobrar').hide()" update=":frmOpciones">
                     </p:commandButton>
-                    <p:commandButton  value="Hecho" actionListener="#{frmOrden.remove()}" icon="ui-icon-check" update="@all">
+
+                    <p:commandButton id="btnCobrar" rendered="#{frmOrden.btnCobrar}" value="Cobrar" actionListener="#{frmOrden.cobrar()}" icon="ui-icon-check" update="@all">
                     </p:commandButton>
                 </p:panelGrid>
+                <p:keyFilter for="efectivo" mask="num" />
             </h:form>
         </p:dialog>
-
+        
         <p:dialog header="Imprimir Ticket" 
                   widgetVar="Imprimir" 
                   modal="true" 
                   showEffect="fade" 
                   hideEffect="fade" 
                   resizable="false"
-                  width="32%"
-                  draggable="false">
-
-            <h:form id="frmImprimir">
-                <p:outputLabel  value="Ticket "/>
-                <p:outputLabel  value="Esto seria el cuerpo del ticket "/>
-                <p:panelGrid columns="2">                          
+                  width="80%"
+                  height="600"
+                  draggable="false"
+                  style="padding: 0.5%; border-bottom-style: dotted;">
+            <h:form style="position: absolute;">
+            <p:dataTable
+                style="width: 50%">
+                <f:facet name="header">
+                    COCINA
+                </f:facet>  
+                <p:columnGroup type="header">
+                    <p:row style="height: 20px;">
+                        <p:column headerText="Cliente:" />
+                        <p:column headerText="" />
+                        <p:column headerText="Fecha:" />
+                        <p:column headerText="#{frmOrden.fecha()}" />
+                    </p:row>
+                    <p:row style="height: 20px;">
+                        <p:column colspan="2" headerText="N° Ticket:"/>
+                        <p:column colspan="2" headerText="#{frmOrden.orden.idOrden}"/>                         
+                    </p:row>
+                    <p:row style="height: 20px;">
+                        <p:column headerText="Mesa:" />
+                        <p:column headerText="#{frmOrden.orden.mesa}" />
+                        <p:column headerText="Hora:" />
+                        <p:column headerText="#{frmOrden.hora()}" />
+                    </p:row>
+                    <p:row style="height: 20px;">
+                        <p:column colspan="3" headerText="CONCEPTO"/>
+                        <p:column colspan="1" headerText="CANTIDAD"/>                         
+                    </p:row>
+                </p:columnGroup>
+ 
+                <p:columnGroup type="header">
+                     <p:row>
+                         <p:column colspan="4" headerText="Comentario"></p:column>
+                    </p:row>
+                </p:columnGroup>
+               
+                <f:facet name="footer">
+                    RESBAR
+                </f:facet>
+            </p:dataTable>
+      </h:form>
+            <h:form style="position: absolute; padding-left: 50%; padding-top: -50%;">
+            <p:dataTable
+                style="width: 100%;">
+                <f:facet name="header">
+                    BEBIDAS
+                </f:facet>
+                <p:columnGroup type="header">
+                    <p:row style="height: 20px;">
+                        <p:column headerText="Cliente:" />
+                        <p:column headerText="#{frmOrden.orden.cliente}" />
+                        <p:column headerText="Fecha:" />
+                        
+                        <p:column headerText="#{frmOrden.fecha()}" />
+                    </p:row>
+                    <p:row style="height: 20px;">
+                        <p:column colspan="2" headerText="N° Ticket:"/>
+                        <p:column colspan="2" headerText="#{frmOrden.orden.idOrden}"/>                         
+                    </p:row>
+                    <p:row style="height: 20px;">
+                        <p:column headerText="Mesa:" />
+                        <p:column headerText="#{frmOrden.orden.mesa}" />
+                        <p:column headerText="Hora:" />
+                        <p:column headerText="#{frmOrden.hora()}" />
+                    </p:row>
+                    <p:row style="height: 20px;">
+                        <p:column colspan="3" headerText="CONCEPTO"/>
+                        <p:column colspan="1" headerText="CANTIDAD"/>                         
+                    </p:row>
+                </p:columnGroup>
+                 
+                <f:facet name="footer">
+                    RESBAR
+                </f:facet>
+            </p:dataTable>
+            </h:form>
+            
+            <h:form id="frmImprimir" style="
+                    padding-top: 500px; padding-left: 35%;">
+                <p:panelGrid columns="2"> 
                     <p:commandButton  value="Cancelar" icon="ui-icon-close" oncomplete="PF('Imprimir').hide()" update=":frmOpciones">
                     </p:commandButton>
                     <p:commandButton  value="Imprimir" icon="ui-icon-print" update="@all">
@@ -147,8 +238,9 @@
                 </p:panelGrid>
             </h:form>
         </p:dialog>
+        
 
-        <p:dialog header="Agregar Prductos"
+        <p:dialog header="Agregar Productos"
                   position="center"
                   widgetVar="Add" 
                   modal="true" 
@@ -168,24 +260,32 @@
                             <h1 class="h4">Fraga Caffe</h1>
                         </div>
                     </div>
-                    <span class="heading">CATEGORIAS</span>
-                    <ul class="list-unstyled">
-                        <li><a href="#"> <i class="fa fa-coffee"></i>Bebidas</a></li>
-                        <li><a href="#"> <i class="fa fa-beer"></i>Bebidas Frias </a></li>
-                        <li><a href="#"> <i class="fa fa-cutlery"></i>Entradas </a></li>                    
-                        <li><a href="#"> <i class="fa fa-glass"></i>Aperitivos </a></li>
-                        <li><a href="#"> <i class="fa fa-spoon"></i>Sopas </a></li>
-                        <li><a href="#"> <i class="fa fa-lemon-o"></i>Ensaladas </a></li>
-                        <li><a href="#"> <i class="fa fa-shopping-basket"></i>Postres </a></li>
-                    </ul> 
+                   
+                    <p:dataTable value="#{frmOrden.categorias}" 
+                                 var="item"
+                                 selection="#{frmCategorias.categoria}"
+                                 selectionMode="single"
+                                 rowKey="#{item.idCategoria}"
+                                 >
+                        <p:ajax event="rowSelect" listener="#{frmCategorias.onRowSelect}" update=":frmProductos"/>   
+                        
+                        <p:column headerText="CATEGORIAS">
+                               
+                            <li class="fa fa-cutlery espacio-icono"><h:outputText class="espacio-menu"  value="#{item.nombre}"/></li>
+                              
+                        </p:column>
+                      </p:dataTable>
+
                 </nav>
+                
+                    
             </h:form>
 
             <h:form id="frmProductos" styleClass="frmProductos">
 
                 <p:dataTable id="products"
                              var="productos" 
-                             value="#{frmproductos.productos}" 
+                             value="#{frmCategorias.productos}" 
                              widgetVar="tblProductos"
                              scrollable="true"
                              scrollHeight="400"
@@ -193,7 +293,7 @@
                              selectionMode="single"
                              selection="#{frmproductos.producto}"
                              filteredValue="#{frmproductos.filtro}"
-                             rowKey="#{productos.codigo}"
+                             rowKey="#{productos.idProducto}"
                              style="padding-bottom: 2%">
 
                     <p:ajax event="rowSelect" listener="#{frmproductos.onRowSelect}" update="@this"/>
@@ -210,9 +310,9 @@
                     <p:column headerText="Precio">
                         <h:outputText value="#{productos.precio}" />
                     </p:column>
-                    <p:column headerText="Cantidad">
+                    <!--<p:column headerText="Cantidad">
                         <p:spinner id="cantidad" value="#{productos.cantidad}" />
-                    </p:column>
+                    </p:column>-->
 
                 </p:dataTable>
                 <div align="right" style="padding-right: 5%">

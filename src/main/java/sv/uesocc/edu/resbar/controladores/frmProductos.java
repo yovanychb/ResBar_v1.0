@@ -18,9 +18,9 @@ import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import org.primefaces.event.SelectEvent;
-import sv.uesocc.edu.resbar.entities.Categoria;
-import sv.uesocc.edu.resbar.entities.Orden;
-import sv.uesocc.edu.resbar.entities.Producto;
+import clases.Categoria;
+import clases.Orden;
+import clases.Producto;
 
 /**
  *
@@ -54,7 +54,7 @@ public class frmProductos implements Serializable {
         productos = new ArrayList<Producto>();
         if (lista.isEmpty()) {
             for (int i = 0; i < 20; i++) {
-                productos.add(new Producto(i, "Producto " + i, 1.05, 0));
+//                productos.add(new Producto(i, "Producto " + i, 1.05, 0));
             }
             lista = productos;
         } else {
@@ -67,8 +67,8 @@ public class frmProductos implements Serializable {
         if (se.getObject() != null) {
             try {
                 this.producto = (Producto) se.getObject();
-                producto.setCantidad(producto.getCantidad() + 1);
-                lista.set(producto.getCodigo(), producto);
+//                producto.setCantidad(producto.getCantidad() + 1);
+//                lista.set(producto.getCodigo(), producto);
                 detalle.remove(producto);
                 detalle.add(producto);
             } catch (Exception e) {
@@ -78,16 +78,16 @@ public class frmProductos implements Serializable {
     }
 
     public void redirect() throws IOException {
-        try {
-            //if (cuenta.getMesa().toString().isEmpty() || cuenta.getMesero().isEmpty() || cuenta.getCliente().isEmpty()) {
-            if (cuenta.getMesa()==null) {
-                addMessage("Error", "No se ha asignado una mesa a la orden");
-            } else {
-                FacesContext.getCurrentInstance().getExternalContext().redirect("productos.jsf");
-            }
-        } catch (Exception e) {
-            Logger.getLogger(getClass().getName()).log(Level.SEVERE, e.getMessage(), e);
-        }
+//        try {
+//            //if (cuenta.getMesa().toString().isEmpty() || cuenta.getMesero().isEmpty() || cuenta.getCliente().isEmpty()) {
+//            if (cuenta.getMesa()==null) {
+//                addMessage("Error", "No se ha asignado una mesa a la orden");
+//            } else {
+//                FacesContext.getCurrentInstance().getExternalContext().redirect("productos.jsf");
+//            }
+//        } catch (Exception e) {
+//            Logger.getLogger(getClass().getName()).log(Level.SEVERE, e.getMessage(), e);
+//        }
 
     }
     
@@ -161,14 +161,14 @@ public class frmProductos implements Serializable {
     }
 
     public List<Categoria> getCats() {
-        cats = new ArrayList<Categoria>();
-        cats.add(new Categoria(1,"Bebidas frias"));
-        cats.add(new Categoria(2,"Bebidas calientes"));
-        cats.add(new Categoria(3,"Postres"));
-        cats.add(new Categoria(4,"Sopas"));
-        cats.add(new Categoria(5,"Entradas"));
-        cats.add(new Categoria(6,"Aperitivos"));
-        cats.add(new Categoria(7,"Ensaladas"));
+//        cats = new ArrayList<Categoria>();
+//        cats.add(new Categoria(1,"Bebidas frias"));
+//        cats.add(new Categoria(2,"Bebidas calientes"));
+//        cats.add(new Categoria(3,"Postres"));
+//        cats.add(new Categoria(4,"Sopas"));
+//        cats.add(new Categoria(5,"Entradas"));
+//        cats.add(new Categoria(6,"Aperitivos"));
+//        cats.add(new Categoria(7,"Ensaladas"));
         return cats;
     }
 

@@ -5,10 +5,14 @@
  */
 package sv.uesocc.edu.resbar.controladores;
 
+import clases.Categoria;
+import clases.Orden;
+import clases.Producto;
 import java.io.IOException;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -17,10 +21,9 @@ import javax.annotation.PostConstruct;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
+import manejadores.ManejadorCategorias;
+import manejadores.ManejadorOrdenes;
 import org.primefaces.event.SelectEvent;
-import sv.uesocc.edu.resbar.entities.Categoria;
-import sv.uesocc.edu.resbar.entities.Orden;
-import sv.uesocc.edu.resbar.entities.Producto;
 
 /**
  *
@@ -33,39 +36,46 @@ public class frmOrden implements Serializable {
     private Orden orden;
     private Producto prod;
     private List<Orden> ordenes;
-    private List<Orden> inicial;
     private List<Orden> filtro;
     private Double efectivo;
-    private int numero;
+    private Double cambio;
+    private int idOrden;
     private List<Categoria> categorias;
     private List<Categoria> modificar;
-
+    private Messages msg = new Messages();
+    private boolean btnCobrar = false;
 
     @PostConstruct
     public void init() {
         orden = new Orden();
         ordenes = new ArrayList<Orden>();
-        inicial = new ArrayList<Orden>();
+        try {
+            ordenes = ManejadorOrdenes.ObtenerActivas();
+        } catch (Exception e) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, e.getMessage(), e);
+        }
+        filtro = new ArrayList<Orden>();
+        filtro = ordenes;
     }
 
     public List<Orden> getOrdenes() {
-        ordenes = new ArrayList<Orden>();
-        if (inicial.isEmpty()) {
-            for (int i = 0; i < 20; i++) {
-                ordenes.add(new Orden(i, i, "Mesero " + i, "Cliente " + i, "descripcion", 0.0));
-            }
-            inicial= ordenes;
-        }else{
-            ordenes = inicial;
+        try {
+            ordenes = ManejadorOrdenes.ObtenerActivas();
+            filtro = ordenes;
+            return ordenes;
+        } catch (Exception e) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, e.getMessage(), e);
+            return Collections.EMPTY_LIST;
         }
-        return ordenes;
+
     }
 
     public void onRowSelect(SelectEvent se) {
         if (se.getObject() != null) {
             try {
                 orden = (Orden) se.getObject();
-                numero = orden.getNumero();
+                idOrden = orden.idOrden;
+
             } catch (Exception e) {
                 Logger.getLogger(getClass().getName()).log(Level.SEVERE, e.getMessage(), e);
             }
@@ -78,11 +88,43 @@ public class frmOrden implements Serializable {
 
     public String fecha() {
         Date ahora = new Date();
-        SimpleDateFormat formateador = new SimpleDateFormat("dd-MM-yyyy hh:mm a");
+        SimpleDateFormat formateador = new SimpleDateFormat("dd-MM-yyyy");
         return formateador.format(ahora);
     }
-
     
+    public String hora(){
+        Date ahora = new Date();
+        SimpleDateFormat formateador = new SimpleDateFormat("hh:mm a");
+        return formateador.format(ahora);
+    }
+    public void cobrar() {
+        try {
+            if (efectivo >= orden.total) {
+                orden.activa = false;
+                ManejadorOrdenes.Actualizar(orden);
+            } else {
+
+            }
+        } catch (Exception e) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, e.getMessage(), e);
+
+        }
+    }
+
+    public void cambio() {
+        if (efectivo == null) {
+            cambio = 0.00;
+            btnCobrar = false;
+        } else {
+            if (efectivo >= orden.total) {
+                btnCobrar = true;
+            } else {
+                btnCobrar = false;
+            }
+            cambio = efectivo - orden.total;
+        }
+    }
+
     public void remove() {
         ordenes.remove(orden);
     }
@@ -99,15 +141,15 @@ public class frmOrden implements Serializable {
         this.ordenes = ordenes;
     }
 
-    public List<Orden> getFiltro() {
-        return filtro;
+    public Double getCambio() {
+        return cambio;
     }
 
-    public void setFiltro(List<Orden> filtro) {
-        this.filtro = filtro;
+    public void setCambio(Double cambio) {
+        this.cambio = cambio;
     }
-    
-     public Producto getProd() {
+
+    public Producto getProd() {
         return prod;
     }
 
@@ -115,24 +157,16 @@ public class frmOrden implements Serializable {
         this.prod = prod;
     }
 
-    public int getNumero() {
-        return numero;
+    public int getIdOrden() {
+        return idOrden;
     }
 
-    public void setNumero(int numero) {
-        this.numero = numero;
+    public void setIdOrden(int idOrden) {
+        this.idOrden = idOrden;
     }
 
     public Double getEfectivo() {
         return efectivo;
-    }
-
-    public List<Orden> getInicial() {
-        return inicial;
-    }
-
-    public void setInicial(List<Orden> inicial) {
-        this.inicial = inicial;
     }
 
     public void setEfectivo(Double efectivo) {
@@ -140,18 +174,48 @@ public class frmOrden implements Serializable {
     }
 
     public List<Categoria> getCategorias() {
-        return categorias;
+        try {
+            return ManejadorCategorias.Obtener(true);
+        } catch (Exception e) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, e.getMessage(), e);
+            return Collections.EMPTY_LIST;
+        }
+
     }
 
     public void setCategorias(List<Categoria> categorias) {
         this.categorias = categorias;
     }
-    
+
     public List<Categoria> getModificar() {
         return modificar;
     }
 
     public void setModificar(List<Categoria> modificar) {
         this.modificar = modificar;
+    }
+
+    public List<Orden> getFiltro() {
+        return filtro;
+    }
+
+    public void setFiltro(List<Orden> filtro) {
+        this.filtro = filtro;
+    }
+
+    public Messages getMsg() {
+        return msg;
+    }
+
+    public void setMsg(Messages msg) {
+        this.msg = msg;
+    }
+
+    public boolean isBtnCobrar() {
+        return btnCobrar;
+    }
+
+    public void setBtnCobrar(boolean btnCobrar) {
+        this.btnCobrar = btnCobrar;
     }
 }

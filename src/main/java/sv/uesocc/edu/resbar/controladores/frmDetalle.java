@@ -16,7 +16,7 @@ import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import org.primefaces.event.SelectEvent;
-import sv.uesocc.edu.resbar.entities.Producto;
+import clases.Producto;
 
 /**
  *
@@ -46,23 +46,23 @@ public class frmDetalle implements Serializable{
 
         for (int i = 0; i < 20; i++) {
 
-            productos.add(new Producto(i, "Producto " + i, 1.05, 0));
+//            productos.add(new Producto(i, "Producto " + i, 1.05, 0));
         }
         return productos;
     }
 
     public void onRowSelect(SelectEvent se) {
         if (se.getObject() != null) {
-            try {
-                this.producto = (Producto) se.getObject();
-
-                producto.setCantidad(producto.getCantidad() + 1);
-                lista.set(producto.getCodigo(), producto);
-                detalle.add(producto);
-                System.out.println(detalle.get(0).getNombre());
-            } catch (Exception e) {
-                Logger.getLogger(getClass().getName()).log(Level.SEVERE, e.getMessage(), e);
-            }
+//            try {
+//                this.producto = (Producto) se.getObject();
+//
+//                producto.setCantidad(producto.getCantidad() + 1);
+//                lista.set(producto.getCodigo(), producto);
+//                detalle.add(producto);
+//                System.out.println(detalle.get(0).getNombre());
+//            } catch (Exception e) {
+//                Logger.getLogger(getClass().getName()).log(Level.SEVERE, e.getMessage(), e);
+//            }
         }
     }
 
